@@ -1,7 +1,10 @@
-
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D 
 from functions import *
+
+jet_colormap = mpl.colors.Colormap('jet')
+
 
 # 生成数据
 x = np.arange(0, 6, 0.1) # 以0.1为单位，生成0到6的数据
@@ -45,6 +48,26 @@ def graph3D():
 
     plt.show()    
 
+def quiver():
+    x = np.arange(-2, 2.5, 0.25)
+    y = np.arange(-2, 2.5, 0.25)
+    x, y = np.meshgrid(x, y)
+
+    x = x.flatten()
+    y = y.flatten()
+
+    grad = numeric_gradient_batch(function_quadratic_sum, np.array([x, y]))
+    figure, ax = plt.subplots()
+    
+    ax.quiver(x, y, -grad[0], -grad[1], angles='xy', color='#666666')
+    ax.set_xlim(-2, 2)
+    ax.set_ylim(-2, 2)
+    
+    ax.grid()
+    ax.legend()
+    ax.set_aspect(1.0)
+    plt.show()
+
 if __name__ == '__main__':
     # graph([[y, x], [y1, x1], [y2, x1], [y3, x1], [y4, x1]])
-    graph3D()
+    quiver()
